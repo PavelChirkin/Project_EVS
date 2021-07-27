@@ -5,9 +5,6 @@ import login.UserInfo;
 
 import java.util.Scanner;
 
-/**
- * @author Andrius Baltrunas
- */
 public class MainLog {
 
     public static void main(String[] args) {
@@ -27,22 +24,23 @@ public class MainLog {
             System.out.println("|___________________________________|");
 
             String select = sc.nextLine();
-            switch(select) {
-                case "1": {
+            switch (select) {
+                case "1" -> {
                     userInfo.registration(sc);
-                    break;
                 }
-                case "2": {
-                    userInfo.login(sc);
-                    break;
+                case "2" -> {
+                    if(userInfo.login(sc)) {
+                        System.out.println("darom viska");
+                    }
+                    //System.out.println("ku-ku");
+                   // System.out.println("ku-ku");
+                    //System.out.println("ku-ku");
                 }
-                case "3": {
+                case "3" -> {
                     isLoading = false;
-                    break;
                 }
-                default: {
+                default -> {
                     System.out.println("Please select menu item");
-                    break;
                 }
             }
         }
