@@ -22,23 +22,27 @@ public class UserInfo {
         System.out.println("User successfully registered");
     }
 
-    public boolean login(Scanner sc) {     // return logRez [success and role]
-        boolean logRez = false;
-        System.out.println("*** User login ***");
+    public String[] login(Scanner sc) {
+        String[] logRez = {"0","0"};                       //  logRez [success = "1", fail = "0"
+        System.out.println("*** User login ***");   //  and role -> student = 0, teacher = 1 ]
         System.out.println("Insert username");
         String userName = sc.nextLine();
         System.out.println("Insert password");
         String password = sc.nextLine();
 
-        // if teacher --> password hardcoded
-
         String encodedPassword = users.get(userName);
-
+        // if teacher --> password hardcoded
+        if(userName.equals("teacher")&& encodedPassword.equals(DigestUtils.sha256Hex("teacher"))){
+            logRez[0] = "1";
+            logRez[1] = "1";
+        }else{
         if(encodedPassword != null && encodedPassword.equals(DigestUtils.sha256Hex(password))){
             System.out.println("User login successfully");
-            logRez = true;
+            logRez[0] = "1";
         }else {
             System.out.println("Login error, please check credentials or create account");
+            //logRez[0] = "0";
+        }
         }
         return logRez;
     }

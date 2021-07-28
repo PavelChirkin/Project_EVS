@@ -1,7 +1,7 @@
 package login;
 
-import com.sun.tools.javac.Main;
-import login.UserInfo;
+//import com.sun.tools.javac.Main;
+//import login.UserInfo;
 
 import java.util.Scanner;
 
@@ -25,23 +25,21 @@ public class MainLog {
 
             String select = sc.nextLine();
             switch (select) {
-                case "1" -> {
-                    userInfo.registration(sc);
-                }
+                case "1" -> userInfo.registration(sc);
                 case "2" -> {
-                    if(userInfo.login(sc)) {
-                        System.out.println("darom viska");
+                    String[] logRez = userInfo.login(sc);
+                    if(logRez[0].equals("1")) {  //login success
+                        if(logRez[1].equals("1")){
+                            System.out.println("teacher is here - anything is possible");
+                            //call teachers menu
+                        }else{
+                            System.out.println("it's a student");
+                        }
                     }
-                    //System.out.println("ku-ku");
-                   // System.out.println("ku-ku");
-                    //System.out.println("ku-ku");
                 }
-                case "3" -> {
-                    isLoading = false;
-                }
-                default -> {
-                    System.out.println("Please select menu item");
-                }
+                case "3" -> isLoading = false;
+                default ->  System.out.println("Please select menu item");
+
             }
         }
     }
