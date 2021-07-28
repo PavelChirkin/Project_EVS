@@ -23,9 +23,9 @@ public class UserInfo {
     }
 
     public String[] login(Scanner sc) {
-        String[] logRez = {"0","0"};                       //  logRez [success = "1", fail = "0"
-        System.out.println("*** User login ***");   //  and role -> student = 0, teacher = 1 ]
-        System.out.println("Insert username");
+        String[] logRez = {"0","0", "0"};                       //  logRez [success = "1", fail = "0"
+        System.out.println("*** User login ***");           //  and role -> student = 0, teacher = 1 ]
+        System.out.println("Insert username");              // and user name
         String userName = sc.nextLine();
         System.out.println("Insert password");
         String password = sc.nextLine();
@@ -35,10 +35,12 @@ public class UserInfo {
         if(userName.equals("teacher")&& encodedPassword.equals(DigestUtils.sha256Hex("teacher"))){
             logRez[0] = "1";
             logRez[1] = "1";
+            logRez[2] = "teacher";
         }else{
         if(encodedPassword != null && encodedPassword.equals(DigestUtils.sha256Hex(password))){
             System.out.println("User login successfully");
             logRez[0] = "1";
+            logRez[2] = userName;
         }else {
             System.out.println("Login error, please check credentials or create account");
             //logRez[0] = "0";

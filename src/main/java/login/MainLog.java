@@ -3,18 +3,22 @@ package login;
 //import com.sun.tools.javac.Main;
 //import login.UserInfo;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class MainLog {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        String dir1 = args[0];
         MainLog main = new MainLog();
-        main.menu();
+
+        main.menu(dir1);
     }
 
-    private void menu() {
+    private void menu(String dir1) throws IOException {
         Scanner sc = new Scanner(System.in);
         UserInfo userInfo = new UserInfo();
+        ExamService examService = new ExamService();
         boolean isLoading = true;
         while(isLoading) {
             System.out.println(" ___________________________________");
@@ -34,6 +38,8 @@ public class MainLog {
                             //call teachers menu
                         }else{
                             System.out.println("it's a student");
+                            String examId = examService.choseExam(sc);
+                            examService.tryExam(examId, logRez[2],dir1);
                         }
                     }
                 }
