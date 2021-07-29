@@ -3,13 +3,15 @@ package login;
 //import com.sun.tools.javac.Main;
 //import login.UserInfo;
 
+import files.ExamSet;
+
 import java.io.IOException;
 import java.util.Scanner;
 
 public class MainLog {
 
     public static void main(String[] args) throws IOException {
-        String dir1 = args[0];
+        String dir1 = "C:"+ "\\"+"exams"+"\\"+"oop-basics";  //args[0];
         MainLog main = new MainLog();
 
         main.menu(dir1);
@@ -37,9 +39,11 @@ public class MainLog {
                             System.out.println("teacher is here - anything is possible");
                             //call teachers menu
                         }else{
-                            System.out.println("it's a student");
+                            //System.out.println("it's a student");
                             String examId = examService.choseExam(sc);
-                            examService.tryExam(examId, logRez[2],dir1);
+                            //System.out.println(examId + logRez[2] + dir1);
+                            ExamSet examSet = examService.tryQuestions(sc);
+                            examService.tryExam(examId, logRez[2],dir1, examSet);
                         }
                     }
                 }
