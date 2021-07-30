@@ -3,6 +3,7 @@ package login;
 //import com.sun.tools.javac.Main;
 //import login.UserInfo;
 
+import files.AnswersToQuestions;
 import files.ExamSet;
 
 import java.io.IOException;
@@ -21,12 +22,13 @@ public class MainLog {
         Scanner sc = new Scanner(System.in);
         UserInfo userInfo = new UserInfo();
         ExamService examService = new ExamService();
+        AnswersToQuestions answersToQuestions = new AnswersToQuestions("124", "1", "2", "3", "4");
         boolean isLoading = true;
         while(isLoading) {
             System.out.println(" ___________________________________");
-            System.out.println("| 1 - User registration             |");
-            System.out.println("| 2 - User login                    |");
-            System.out.println("| 3 - Exit                          |");
+            System.out.println("|   1 - User registration           |");
+            System.out.println("|   2 - User login                  |");
+            System.out.println("|   3 - Exit                        |");
             System.out.println("|___________________________________|");
 
             String select = sc.nextLine();
@@ -41,6 +43,7 @@ public class MainLog {
                         }else{
                             //System.out.println("it's a student");
                             String examId = examService.choseExam(sc);
+                            //Find examSet by examId
                             //System.out.println(examId + logRez[2] + dir1);
                             ExamSet examSet = examService.tryQuestions(sc);
                             examService.tryExam(examId, logRez[2],dir1, examSet);

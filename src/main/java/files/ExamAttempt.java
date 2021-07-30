@@ -1,7 +1,7 @@
 package files;
 
 public class ExamAttempt {
-    private String examId;
+    private String examId;  //examAttemptId
     private String userName;
     private ExamSet examset;
 
