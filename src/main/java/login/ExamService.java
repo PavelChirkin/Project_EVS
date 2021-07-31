@@ -1,18 +1,21 @@
 package login;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import files.AnswersToQuestions;
-import files.ExamAttempt;
-import files.ExamSet;
+import files.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class ExamService {
 
+    List<ExamResult> examResultList = new ArrayList<>();
+    LocalDateTime currentTime = LocalDateTime.now();
 
     public String choseExam(Scanner sc) {
         System.out.println("*** Chose exam you want take ***");
@@ -29,20 +32,23 @@ public class ExamService {
         return  examId;
     }
 
-    public void tryExam(String examId, String userName, String dir, ExamSet examSet) throws IOException {
+    public void tryExam(String examId, String userName, String dir1, String dir2, ExamSet examSet) throws IOException {
         //check time run from last trying
-
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
-
-        File file = new File(dir + "\\"+ "testrez.json");
-        if(!file.exists())
-        {
-            file.createNewFile();
+        File file = new File(dir2 + "\\"+ "examrezults.json");
+        examResultList = mapper.readValue(file, new TypeReference<>() {});
+        if(!examResultList.isEmpty()) {
+            for (ExamResult rez : examResultList) {
+                if(rez.getDateStamp().plusDays(2).isBefore(currentTime)&&rez.getExamId().equals(examId)&&rez.getUserName().equals(userName)) {
+                    System.out.println("You don't pass 2 days from last attempt. Try later");
+                    return;
+                }
+            }
         }
-
+        File file1 = FileUtils.createFileIfNotExist(dir1 + "\\"+ examId + userName + "exam.json");
         ExamAttempt examAttempt = new ExamAttempt(examId, userName, examSet);
-        mapper.writeValue(file, examAttempt);
+        mapper.writeValue(file1, examAttempt);
         System.out.println("file: " + "is written");
     }
     public ExamSet tryQuestions(Scanner sc) {
@@ -68,20 +74,28 @@ public class ExamService {
         examSet.setExamId("124");
         return examSet;
     }
-    public void CheckExam(AnswersToQuestions answersToQuestions, ExamSet examSet, String dir) throws IOException {
+    public void CheckExam(String userName, ExamSet examSet, String dir1,String dir2) throws IOException {
         //check time run from last trying
-        int count;
+        int counter = 0;
         ObjectMapper mapper = new ObjectMapper();
-        mapper.enable(SerializationFeature.INDENT_OUTPUT);
-
-        File file = new File(dir + "\\"+ "testrez.json");
-        if(!file.exists())
+        File file = new File(dir2 + "\\"+"oop_basics_answer.json");
+        AnswersToQuestions answersToQuestions = mapper.readValue(file, AnswersToQuestions.class);
+        //System.out.println(answersToQuestions);
+        for (int i=0; i<answersToQuestions.getAnswers().length; i++)
         {
-            file.createNewFile();
+            if(answersToQuestions.getAnswers()[i].equals(examSet.getQuestion()[i])){
+                counter++;
+            }
         }
 
-        //answersToQuestions.;
-        //mapper.writeValue(file, persons);
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+        File file1 = FileUtils.createFileIfNotExist(dir2 + "\\"+ "examrezults.json");
+        int numb = examResultList.size() + 1;
+        ExamResult examRezult = new ExamResult("" + numb, userName, examSet.getExamId(),currentTime,counter);
+
+        examResultList.add(numb, examRezult);
+
+        mapper.writeValue(file1, examResultList);
 
         System.out.println("file: " + "is written");
     }
