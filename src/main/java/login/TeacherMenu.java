@@ -2,6 +2,7 @@ package login;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import files.AnswersToQuestions;
+import files.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -44,9 +45,9 @@ public class TeacherMenu {
     }
     public void writeExamFile(AnswersToQuestions answersToQuestions, String dir2) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        File file = new File(dir2 + "\\"+"oop_basics_answer.json");
+        File file = FileUtils.createFileIfNotExist(dir2 + "\\"+"oop_basics_answer.json");
         mapper.writeValue(file, answersToQuestions);
-        System.out.println("file: oop_basics_answer" + "is written");
+        System.out.println("file: oop_basics_answer" + " is written");
     }
 
 }

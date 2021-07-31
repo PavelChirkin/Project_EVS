@@ -4,7 +4,7 @@ public class AnswersToQuestions {
 
     private String examId;
     private String[] answers;
-    private String[] quest_body;
+    private String[] quest_body;    //possible answer variants
 
     public AnswersToQuestions(String examId,String[] answers, String[] quest_body) {
         this.examId = examId;
