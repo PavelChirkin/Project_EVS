@@ -15,29 +15,30 @@ import java.util.Scanner;
 public class ExamService {
 
     List<ExamResult> examResultList = new ArrayList<>();
+    List<AnswersToQuestions> answersToQuestionsList = new ArrayList<>();
     LocalDateTime currentTime = LocalDateTime.now();
 
-    public String choseExam(Scanner sc) {
-        System.out.println("*** Chose exam you want take ***");
-        String examId = getExamId(sc);
+    public void initArrayLists(String dir1,String dir2) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+        File file = new File(dir2 + "\\"+ "examrezults.json");
+        examResultList = mapper.readValue(file, new TypeReference<>() {});
 
-        return  examId;
+        File file1 = new File(dir2 + "\\"+"oop_basics_answer.json");
+        answersToQuestionsList = mapper.readValue(file1, new TypeReference<>() {});
     }
-
-    public String getExamId(Scanner sc) {
-        //String examId = "124";
-        //get exam Id from list
-        System.out.println("*** To take Oop-basics exam, please press [124] ***");
+    public String choseExam(Scanner sc) {
+        System.out.println("*** Chose exam from list below ***");
+        for (AnswersToQuestions atq : answersToQuestionsList) {
+            System.out.println("["+ atq.getExamId()+ "]" + atq.getExamName());
+        }
+        System.out.println("*** please exam ID - number in the brackets []***");
         String examId = sc.nextLine();
         return  examId;
     }
 
     public void tryExam(String examId, String userName, String dir1, String dir2, ExamSet examSet) throws IOException {
         //check time run from last trying
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.enable(SerializationFeature.INDENT_OUTPUT);
-        File file = new File(dir2 + "\\"+ "examrezults.json");
-        examResultList = mapper.readValue(file, new TypeReference<>() {});
         if(!examResultList.isEmpty()) {
             for (ExamResult rez : examResultList) {
                 if(rez.getDateStamp().plusDays(2).isBefore(currentTime)&&rez.getExamId().equals(examId)&&rez.getUserName().equals(userName)) {
@@ -46,57 +47,49 @@ public class ExamService {
                 }
             }
         }
+        ObjectMapper mapper = new ObjectMapper();
         File file1 = FileUtils.createFileIfNotExist(dir1 + "\\"+ examId + userName + "exam.json");
         ExamAttempt examAttempt = new ExamAttempt(examId, userName, examSet);
         mapper.writeValue(file1, examAttempt);
         System.out.println("file: " + "is written");
     }
-    public ExamSet tryQuestions(Scanner sc) {
+    public ExamSet tryQuestions(Scanner sc, String examId) {
         ExamSet examSet = new ExamSet();
         String[] question = new String[4];
-        System.out.println("*** Please answer the questions ***");
-        System.out.println("1 Question  * How many legs elephant have ? *");
-        System.out.println(" 1 - [a] , 2 - [b], 3 - [c], 4 - [d]");
-        question[0] = (sc.nextLine());
-
-        System.out.println("2 Question  * Does crocodiles can fly ? *");
-        System.out.println(" Yes - [a] , No - [b], May be - [c]");
-        question[1] = (sc.nextLine());
-
-        System.out.println("3 Question  * How many jobs you can do at the same time ? *");
-        System.out.println(" 1 - [a] , 2 - [b], 3 - [c], 4 and more - [d]");
-        question[2] = (sc.nextLine());
-
-        System.out.println("4 Question  * What the Java is ? *");
-        System.out.println(" island - [a] , coffee - [b], language - [c]");
-        question[3] = (sc.nextLine());
-        examSet.setQuestion(question);
-        examSet.setExamId("124");
-        return examSet;
-    }
-    public void CheckExam(String userName, ExamSet examSet, String dir1,String dir2) throws IOException {
-        //check time run from last trying
-        int counter = 0;
-        ObjectMapper mapper = new ObjectMapper();
-        File file = new File(dir2 + "\\"+"oop_basics_answer.json");
-        AnswersToQuestions answersToQuestions = mapper.readValue(file, AnswersToQuestions.class);
-        //System.out.println(answersToQuestions);
-        for (int i=0; i<answersToQuestions.getAnswers().length; i++)
-        {
-            if(answersToQuestions.getAnswers()[i].equals(examSet.getQuestion()[i])){
-                counter++;
+        System.out.println("*** To take Oop-basics exam, please press [124] ***");
+        for (AnswersToQuestions atq : answersToQuestionsList) {
+            if (atq.getExamId().equals(examSet.getExamId())) {
+                for(int j = 0; j < atq.getQuest_body().length; j++) {
+                    System.out.println(atq.getQuest_body()[j]);
+                    question[j] = (sc.nextLine());
+                }
             }
         }
 
+        examSet.setQuestion(question);
+        return examSet;
+    }
+    public void CheckExam(String userName, ExamSet examSet, String dir1,String dir2) throws IOException {
+        //bring answers to questions set from list and match them with examset
+        int counter = 0;
+        for (AnswersToQuestions atq : answersToQuestionsList){
+            if(atq.getExamId().equals(examSet.getExamId())){
+                for (int i=0; i<atq.getAnswers().length; i++)
+                {
+                    if(atq.getAnswers()[i].equals(examSet.getQuestion()[i])){
+                        counter++;
+                    }
+                }
+            }
+        }
+
+        ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         File file1 = FileUtils.createFileIfNotExist(dir2 + "\\"+ "examrezults.json");
         int numb = examResultList.size() + 1;
         ExamResult examRezult = new ExamResult("" + numb, userName, examSet.getExamId(),currentTime,counter);
-
         examResultList.add(numb, examRezult);
-
         mapper.writeValue(file1, examResultList);
-
         System.out.println("file: " + "is written");
     }
 

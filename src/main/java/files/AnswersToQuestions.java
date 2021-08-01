@@ -3,10 +3,11 @@ package files;
 public class AnswersToQuestions {
 
     private String examId;
+    private String examName;
     private String[] answers;
-    private String[] quest_body;    //possible answer variants
+    private String[] quest_body;    //with possible answer variants
 
-    public AnswersToQuestions(String examId,String[] answers, String[] quest_body) {
+    public AnswersToQuestions(String examId,String examName,String[] answers, String[] quest_body) {
         this.examId = examId;
         this.answers = answers;
         this.quest_body = quest_body;
@@ -20,6 +21,12 @@ public class AnswersToQuestions {
     }
     public void setExamId(String examId) {
         this.examId = examId;
+    }
+    public String getExamName() {
+        return examName;
+    }
+    public void setExamName(String examName) {
+        this.examName = examName;
     }
     public String[] getAnswers() {
         return answers;

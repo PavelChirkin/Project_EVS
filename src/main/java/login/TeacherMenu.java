@@ -14,6 +14,8 @@ public class TeacherMenu {
         AnswersToQuestions answersToQuestions = new AnswersToQuestions();
         System.out.println("*** Input examID you want to upload ***");
         answersToQuestions.setExamId(sc.nextLine());
+        System.out.println("*** Input examName you want to upload ***");
+        answersToQuestions.setExamName(sc.nextLine());
 
         String[] quest_body = new String[4];
         String[] answers = new String[4];

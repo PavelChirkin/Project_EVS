@@ -27,9 +27,10 @@ public class MainLog {
         UserInfo userInfo = new UserInfo();
         ExamService examService = new ExamService();
         TeacherMenu teacherMenu = new TeacherMenu();
-        String[] answers = {"1", "2", "3", "4"};
-        String[] quest_body = {"1", "2", "3", "4"};
+        //String[] answers = {"1", "2", "3", "4"};
+        //String[] quest_body = {"1", "2", "3", "4"};
         AnswersToQuestions answersToQuestions = new AnswersToQuestions();
+        examService.initArrayLists(dir1,dir2);
         boolean isLoading = true;
         while(isLoading) {
             System.out.println(" ___________________________________");
@@ -74,9 +75,8 @@ public class MainLog {
                         }else{
                             //System.out.println("it's a student");
                             String examId = examService.choseExam(sc);
-                            //Find examSet by examId
-                            //System.out.println(examId + logRez[2] + dir1);
-                            ExamSet examSet = examService.tryQuestions(sc);
+
+                            ExamSet examSet = examService.tryQuestions(sc,examId);
                             examService.tryExam(examId, logRez[2],dir1, dir2, examSet);
                             examService.CheckExam(logRez[2],examSet, dir1, dir2);
                         }
