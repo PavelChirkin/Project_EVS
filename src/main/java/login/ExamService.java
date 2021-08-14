@@ -32,7 +32,7 @@ public class ExamService {
         for (AnswersToQuestions atq : answersToQuestionsList) {
             System.out.println("["+ atq.getExamId()+ "]" + atq.getExamName());
         }
-        System.out.println("*** please exam ID - number in the brackets []***");
+        System.out.println("*** please choose exam ID - number in the brackets []***");
         String examId = sc.nextLine();
         return  examId;
     }
