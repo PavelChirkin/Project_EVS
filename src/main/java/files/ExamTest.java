@@ -6,12 +6,12 @@ public class ExamTest extends Exam {
 
 
     public String examId;
-    public ExamNames examNames;
+    public String examNames;
     public List<Question> questions;
 
     public ExamTest(String examId, ExamNames examNames, List<Question> questions) {
         this.examId = examId;
-        this.examNames = examNames;
+        this.examNames = ExamNames.valueOf(examNames.name()).toString();
         this.questions = questions;
     }
     public ExamTest() {
@@ -23,14 +23,14 @@ public class ExamTest extends Exam {
     public void setExamId(String examId) {
         this.examId = examId;
     }
-
-    public ExamNames getExamNames() {
-        return examNames;
+/*
+    public String getExamName() {
+        return examName;
     }
 
-    public void setExamNames(ExamNames examNames) {
-        this.examNames = examNames;
-    }
+    public void setExamName(String examName) {
+        this.examName = examNames.name();
+    }   */
 
     public List<Question> getQuestions() {
         return questions;
@@ -38,5 +38,24 @@ public class ExamTest extends Exam {
 
     public void setQuestions(List<Question> questions) {
         this.questions = questions;
+    }
+
+    @Override
+    public ExamNames getExamNames() {
+        return ExamNames.OOP_PAGRINDAI;
+    }
+
+    @Override
+    public void setExamNames(String examNames) {
+        this.examNames = examNames.toString();
+    }
+
+    @Override
+    public String toString() {
+        return "ExamTest{" +
+                "examId='" + examId + '\'' +
+                ", examNames='" + examNames + '\'' +
+                ", questions=" + questions +
+                '}';
     }
 }

@@ -5,6 +5,7 @@ package login;
 
 import files.AnswersToQuestions;
 import files.ExamSet;
+import files.ExamTest;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -29,7 +30,8 @@ public class MainLog {
         TeacherMenu teacherMenu = new TeacherMenu();
         //String[] answers = {"1", "2", "3", "4"};
         //String[] quest_body = {"1", "2", "3", "4"};
-        AnswersToQuestions answersToQuestions = new AnswersToQuestions();
+        //AnswersToQuestions answersToQuestions = new AnswersToQuestions();
+        ExamTest examTest = new ExamTest();
         examService.initArrayLists(dir1,dir2);
         boolean isLoading = true;
         while(isLoading) {
@@ -60,8 +62,9 @@ public class MainLog {
                                 String select1 = sc.nextLine();
                                 switch (select1) {
                                     case "1" -> {
-                                        answersToQuestions = teacherMenu.addNewExam(sc);
-                                        teacherMenu.writeExamFile(answersToQuestions, dir2);
+                                        //answersToQuestions = teacherMenu.addNewExam(sc);
+                                        examTest = teacherMenu.addNewExam(sc);
+                                        teacherMenu.writeExamFile(examTest, dir2);
                                     }
                                     // case "2" -> teacherMenu
                                     // case "3" -> {
@@ -74,11 +77,10 @@ public class MainLog {
                             }
                         }else{
                             //System.out.println("it's a student");
-                            String examId = examService.choseExam(sc);
+                            examTest = examService.choseExam(sc);
 
-                            ExamSet examSet = examService.tryQuestions(sc,examId);
-                            examService.tryExam(examId, logRez[2],dir1, dir2, examSet);
-                            examService.CheckExam(logRez[2],examSet, dir1, dir2);
+                            examService.tryExam(sc,examTest, logRez[2],dir1, dir2);
+                            //examService.CheckExam(logRez[2],examSet, dir1, dir2);
                         }
                     }
                 }
