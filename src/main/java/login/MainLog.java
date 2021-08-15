@@ -3,8 +3,6 @@ package login;
 //import com.sun.tools.javac.Main;
 //import login.UserInfo;
 
-import files.AnswersToQuestions;
-import files.ExamSet;
 import files.ExamTest;
 
 import java.io.IOException;

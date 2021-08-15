@@ -7,7 +7,10 @@ import files.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.chrono.ChronoLocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -19,6 +22,7 @@ public class ExamService {
     ExamTest examTest = new ExamTest();
     List<ExamTest> examTestList = new ArrayList<>();
     LocalDateTime currentTime = LocalDateTime.now();
+    String formatToday = currentTime.format(DateTimeFormatter.BASIC_ISO_DATE);
 
     public void initArrayLists(String dir1,String dir2) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
@@ -58,7 +62,7 @@ public class ExamService {
         //check time run from last trying
         if(!examResultList.isEmpty()) {
             for (ExamResult rez : examResultList) {
-                if(rez.getDateStamp().plusDays(2).isBefore(currentTime)&&rez.getExamId().equals(examTest.getExamId())&&rez.getUserName().equals(userName)) {
+                if(LocalDate.parse(rez.getDateStamp(), DateTimeFormatter.BASIC_ISO_DATE).plusDays(2).isBefore(ChronoLocalDate.from(currentTime))&&rez.getExamId().equals(examTest.getExamId())&&rez.getUserName().equals(userName)) {
                     System.out.println("You don't pass 2 days from last attempt. Try later");
                     return;
                 }
@@ -75,7 +79,7 @@ public class ExamService {
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         File fileResults = FileUtils.createFileIfNotExist(dir2 + "\\"+ "examresults.json");
         int numb = examResultList.size() + 1;
-        ExamResult examResult = new ExamResult("" + numb, userName, examSet.getExamId(),currentTime,examSet.getCounter());
+        ExamResult examResult = new ExamResult("" + numb, userName, examSet.getExamId(),formatToday,examSet.getCounter());
         examResultList.add(examResult);
         mapper.writeValue(fileResults, examResultList);
         System.out.println("file: fileResults" + "is written");

@@ -9,11 +9,11 @@ public class ExamResult {
     private String examAttemptId;
     private String userName;
     private String examId;
-    private LocalDateTime dateStamp;
+    private String dateStamp;
     private int AssessmentOfKnowledge;
 
 
-    public ExamResult(String examAttemptId, String userName, String examId, LocalDateTime dateStamp, int assessmentOfKnowledge) {
+    public ExamResult(String examAttemptId, String userName, String examId, String dateStamp, int assessmentOfKnowledge) {
         this.examAttemptId = examAttemptId;
         this.userName = userName;
         this.examId = examId;
@@ -47,11 +47,11 @@ public class ExamResult {
         this.examId = examId;
     }
 
-    public LocalDateTime getDateStamp() {
+    public String getDateStamp() {
         return dateStamp;
     }
 
-    public void setDateStamp(LocalDateTime dateStamp) {
+    public void setDateStamp(String dateStamp) {
         this.dateStamp = dateStamp;
     }
 
