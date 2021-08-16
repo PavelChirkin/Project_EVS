@@ -6,12 +6,11 @@ package login;
 import files.ExamTest;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.Scanner;
 
 public class MainLog {
 
-    LocalDateTime currentTime = LocalDateTime.now();
+
 
     public static void main(String[] args) throws IOException {
         String dir1 = "C:"+ "\\"+"exams"+"\\"+"oop-basics";  //args[0];
@@ -26,9 +25,6 @@ public class MainLog {
         UserInfo userInfo = new UserInfo();
         ExamService examService = new ExamService();
         TeacherMenu teacherMenu = new TeacherMenu();
-        //String[] answers = {"1", "2", "3", "4"};
-        //String[] quest_body = {"1", "2", "3", "4"};
-        //AnswersToQuestions answersToQuestions = new AnswersToQuestions();
         ExamTest examTest = new ExamTest();
         examService.initArrayLists(dir1,dir2);
         boolean isLoading = true;
@@ -46,8 +42,7 @@ public class MainLog {
                     String[] logRez = userInfo.login(sc);
                     if(logRez[0].equals("1")) {  //login success
                         if(logRez[1].equals("1")){
-                            System.out.println("teacher is here - anything is possible");
-                            //call teachers menu
+                                  //call teachers menu
                             boolean teacherWork = true;
                             while(teacherWork) {
                                 System.out.println(" ___________________________________");

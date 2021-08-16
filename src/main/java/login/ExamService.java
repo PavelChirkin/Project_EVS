@@ -18,7 +18,6 @@ import java.util.Scanner;
 public class ExamService {
     ExamResult examResult = new ExamResult();
     List<ExamResult> examResultList = new ArrayList<>();
-    //List<AnswersToQuestions> answersToQuestionsList = new ArrayList<>();
     ExamTest examTest = new ExamTest();
     List<ExamTest> examTestList = new ArrayList<>();
     LocalDateTime currentTime = LocalDateTime.now();
@@ -33,17 +32,13 @@ public class ExamService {
         }
 
         File fileExamList = FileUtils.createFileIfNotExist(dir2 + "\\"+"examList.json");
-        //answersToQuestionsList = mapper.readValue(file1, new TypeReference<>() {});
-       // if (fileExamList.equals(examTestList)) {
+        // if (fileExamList.equals(examTestList)) {
             examTestList = mapper.readValue(fileExamList, new TypeReference<>() {});
-       // }
+        // }
     }
     public ExamTest choseExam(Scanner sc) {
         System.out.println("*** Chose exam from list below ***");
-    /*    for (AnswersToQuestions atq : answersToQuestionsList) {
-            System.out.println("["+ atq.getExamId()+ "]" + atq.getExamName());
-        }   */
-        //System.out.println(examTestList.size());
+        // Show list of exams
         for (ExamTest examTest : examTestList) {
             System.out.println("["+ examTest.getExamId()+ "]" + examTest.getExamNames());
         }
@@ -107,41 +102,7 @@ public class ExamService {
         examSet.setCounter(counter);
         return examSet;
     }
- /*   public void CheckExam(String userName, ExamSet examSet, String dir1,String dir2) throws IOException {
-        //bring answers to questions set from list and match them with examset
-        int counter = 0;
-        Question question = new Question();
-        for (AnswersToQuestions atq : answersToQuestionsList){
-            if(atq.getExamId().equals(examSet.getExamId())){
-                for (int i=0; i<atq.getAnswers().length; i++)
-                {
-                    if(atq.getAnswers()[i].equals(examSet.getQuestion()[i])){
-                        counter++;
-                    }
-                }
-            }
-        }
 
-        for (ExamTest examTest : examTestList){
-            if(examTest.getExamId().equals(examSet.getExamId())){
-                for (int i=0; i<examTest.questions.size(); i++)
-                {
-                    //if(examTest.getQuestions().getGoodAnswer   getAnswers()[i].equals(examSet.getQuestion()[i])){
-                        counter++;
-                   // }
-                }
-            }
-        }
-
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.enable(SerializationFeature.INDENT_OUTPUT);
-        File fileResults = FileUtils.createFileIfNotExist(dir2 + "\\"+ "examresults.json");
-        int numb = examResultList.size() + 1;
-        ExamResult examResult = new ExamResult("" + numb, userName, examSet.getExamId(),currentTime,counter);
-        examResultList.add(examResult);
-        mapper.writeValue(fileResults, examResultList);
-        System.out.println("file: fileResults" + "is written");
-    }   */
 
 }
 

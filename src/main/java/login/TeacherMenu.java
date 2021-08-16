@@ -33,50 +33,13 @@ public class TeacherMenu {
             }
             System.out.println("*** Set correct answer's to questions variant");
             question.setGoodAnswer(sc.nextLine());
-            System.out.println(question.toString());
+            //System.out.println(question.toString());
             questions.add(question);
             examTest.setQuestions(questions);
         }
         return examTest;
     }
-/*
-    public AnswersToQuestions addNewExam(Scanner sc) {
-        AnswersToQuestions answersToQuestions = new AnswersToQuestions();
-        System.out.println("*** Input examID you want to upload ***");
-        answersToQuestions.setExamId(sc.nextLine());
-        System.out.println("*** Input examName you want to upload ***");
-        answersToQuestions.setExamName(sc.nextLine());
 
-        String[] quest_body = new String[4];
-        String[] answers = new String[4];
-
-        System.out.println("*** Set question 1 body ***");
-        quest_body[0] = sc.nextLine();
-        System.out.println("*** Set question 1 answer ***");
-        answers[0] = sc.nextLine();
-
-        System.out.println("*** Set question 2 body ***");
-        quest_body[1] = sc.nextLine();
-        System.out.println("*** Set question 2 answer ***");
-        answers[1] = sc.nextLine();
-
-        System.out.println("*** Set question 3 body ***");
-        quest_body[2] = sc.nextLine();
-        System.out.println("*** Set question 3 answer ***");
-        answers[2] = sc.nextLine();
-
-        System.out.println("*** Set question 4 body ***");
-        quest_body[3] = sc.nextLine();
-        System.out.println("*** Set question 4 answer ***");
-        answers[3] = sc.nextLine();
-
-        answersToQuestions.setQuest_body(quest_body);
-        answersToQuestions.setAnswers(answers);
-
-    return answersToQuestions;
-    }
-
- */
     public void writeExamFile(ExamTest examTest, String dir2) throws IOException {
         //System.out.println(examTest.toString());
         ObjectMapper mapper = new ObjectMapper();
