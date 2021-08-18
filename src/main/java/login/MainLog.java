@@ -1,7 +1,6 @@
 package login;
 
-//import com.sun.tools.javac.Main;
-//import login.UserInfo;
+
 
 import files.ExamTest;
 
@@ -21,65 +20,60 @@ public class MainLog {
     }
 
     private void menu(String dir1,String dir2) throws IOException {
-        Scanner sc = new Scanner(System.in);
-        UserInfo userInfo = new UserInfo();
-        ExamService examService = new ExamService();
-        TeacherMenu teacherMenu = new TeacherMenu();
-        ExamTest examTest = new ExamTest();
-        examService.initArrayLists(dir1,dir2);
-        boolean isLoading = true;
-        while(isLoading) {
-            System.out.println(" ___________________________________");
-            System.out.println("|   1 - User registration           |");
-            System.out.println("|   2 - User login                  |");
-            System.out.println("|   3 - Exit                        |");
-            System.out.println("|___________________________________|");
+        try (Scanner sc = new Scanner(System.in)) {
+            UserInfo userInfo = new UserInfo();
+            ExamService examService = new ExamService();
+            TeacherMenu teacherMenu = new TeacherMenu();
+            ExamTest examTest;
+            examService.initArrayLists(dir2);
+            boolean isLoading = true;
+            while (isLoading) {
+                System.out.println(" ___________________________________");
+                System.out.println("|   1 - User registration           |");
+                System.out.println("|   2 - User login                  |");
+                System.out.println("|   3 - Exit                        |");
+                System.out.println("|___________________________________|");
 
-            String select = sc.nextLine();
-            switch (select) {
-                case "1" -> userInfo.registration(sc);
-                case "2" -> {
-                    String[] logRez = userInfo.login(sc);
-                    if(logRez[0].equals("1")) {  //login success
-                        if(logRez[1].equals("1")){
-                                  //call teachers menu
-                            boolean teacherWork = true;
-                            while(teacherWork) {
-                                System.out.println(" ___________________________________");
-                                System.out.println("|   1 - Set exam questions          |");
-                                System.out.println("|   2 - Check exam answers          |");
-                                System.out.println("|   3 - Get statistics              |");
-                                System.out.println("|   4 - Exit                        |");
-                                System.out.println("|___________________________________|");
+                String select = sc.nextLine();
+                switch (select) {
+                    case "1" -> userInfo.registration(sc);
+                    case "2" -> {
+                        String[] logRez = userInfo.login(sc);
+                        if (logRez[0].equals("1")) {  //login success
+                            if (logRez[1].equals("1")) {
+                                //call teachers menu
+                                boolean teacherWork = true;
+                                while (teacherWork) {
+                                    System.out.println(" ___________________________________");
+                                    System.out.println("|   1 - Set exam questions          |");
+                                    System.out.println("|   2 - Get statistics              |");
+                                    System.out.println("|   3 - Exit                        |");
+                                    System.out.println("|___________________________________|");
 
-                                String select1 = sc.nextLine();
-                                switch (select1) {
-                                    case "1" -> {
-                                        //answersToQuestions = teacherMenu.addNewExam(sc);
-                                        examTest = teacherMenu.addNewExam(sc);
-                                        teacherMenu.writeExamFile(examTest, dir2);
+                                    String select1 = sc.nextLine();
+                                    switch (select1) {
+                                        case "1" -> {
+                                            examTest = teacherMenu.addNewExam(sc);
+                                            teacherMenu.writeExamFile(examTest, dir2);
+                                        }
+                                        case "2" -> examService.getStatistics();
+                                        case "3" -> {
+                                            isLoading = false;
+                                            teacherWork = false;
+                                        }
+                                        default -> System.out.println("Please select menu item");
                                     }
-                                    // case "2" -> teacherMenu
-                                    // case "3" -> {
-                                    case "4" -> {
-                                        isLoading = false;
-                                        teacherWork = false;
-                                    }
-                                    default -> System.out.println("Please select menu item");
                                 }
+                            } else {
+                                examTest = examService.choseExam(sc);
+                                examService.tryExam(sc, examTest, logRez[2], dir1, dir2);
                             }
-                        }else{
-                            //System.out.println("it's a student");
-                            examTest = examService.choseExam(sc);
-
-                            examService.tryExam(sc,examTest, logRez[2],dir1, dir2);
-                            //examService.CheckExam(logRez[2],examSet, dir1, dir2);
                         }
                     }
-                }
-                case "3" -> isLoading = false;
-                default ->  System.out.println("Please select menu item");
+                    case "3" -> isLoading = false;
+                    default -> System.out.println("Please select menu item");
 
+                }
             }
         }
     }

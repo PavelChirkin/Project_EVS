@@ -1,9 +1,8 @@
 package login;
 
-import org.apache.commons.codec.digest.DigestUtils;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -14,29 +13,30 @@ public class UserInfo {
 
     private final Map<String, String> users = new HashMap<>();
 
-    public void registration(Scanner sc) {
+    public void registration(Scanner sc)  {
         System.out.println("*** User Registration ***");
         String userName = getUniqueUserName(sc);
         String password = getCorrectPassword(sc);
 
         users.put(userName, password);
         System.out.println("User successfully registered");
+
     }
 
     public String[] login(Scanner sc) {
-        String[] logRez = {"0","0", "0"};                       //  logRez [success = "1", fail = "0"
-        System.out.println("*** User login ***");           //  and role -> student = 0, teacher = 1 ]
-        System.out.println("Insert username");              // and user name
+        String[] logRez = {"0","0", "0"};                   //  logRez [success = "1", fail = "0"
+        System.out.println("*** User login ***");           //  and role -> student = 0, teacher = 1
+        System.out.println("Insert username");              // and user name ]
         String userName = sc.nextLine();
         System.out.println("Insert password");
         String password = sc.nextLine();
 
         String encodedPassword = users.get(userName);
         // if teacher --> password hardcoded
-        if(userName.equals("teacher")&& encodedPassword.equals(DigestUtils.sha256Hex("teacher"))){
+        if(userName.equals("Teacher")&& encodedPassword.equals(DigestUtils.sha256Hex("Teacher"))){
             logRez[0] = "1";
             logRez[1] = "1";
-            logRez[2] = "teacher";
+            logRez[2] = "Teacher";
         }else{
         if(encodedPassword != null && encodedPassword.equals(DigestUtils.sha256Hex(password))){
             System.out.println("User login successfully");
@@ -57,7 +57,7 @@ public class UserInfo {
         do {
             System.out.println(text);
             System.out.println("Please insert password");
-            boolean passwordLength = false;
+            boolean passwordLength;
             do {
                 password = sc.nextLine();
                 passwordLength = checkPasswordLength(password);
@@ -89,16 +89,14 @@ public class UserInfo {
 
     private String getUniqueUserName(Scanner sc) {
         String userName;
-        String text = "Please insert username";
+        //String text = "Please insert username";
         do {
-            //System.out.println(text);
-            //userName = sc.nextLine();
-            boolean userNameLength = false;
+            boolean userNameLength;
             do {
                 userName = sc.nextLine();
                 userNameLength = checkUserNameLength(userName);
             }while(!userNameLength);
-            text = "This name exist please insert another one";
+            //text = "This name exist please insert another one";
         }while(users.get(userName) != null);
 
         return userName;

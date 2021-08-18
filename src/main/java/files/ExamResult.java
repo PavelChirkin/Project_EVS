@@ -62,4 +62,14 @@ public class ExamResult {
     public void setAssessmentOfKnowledge(int assessmentOfKnowledge) {
         AssessmentOfKnowledge = assessmentOfKnowledge;
     }
+
+    @Override
+    public String toString() {
+        return
+                "Exam Attempt ='" + examAttemptId + '\'' +
+                ", userName ='" + userName + '\'' +
+                ", examId='" + examId + '\'' +
+                ", date ='" + dateStamp + '\'' +
+                ", Assessment Of Knowledge=" + AssessmentOfKnowledge ;
+    }
 }
