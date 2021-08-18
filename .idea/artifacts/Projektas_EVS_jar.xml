@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="Projektas_EVS:jar">
+    <output-path>$USER_HOME$/Desktop/EVS programa</output-path>
+    <root id="archive" name="Projektas_EVS.jar">
+      <element id="module-output" name="Projektas_EVS" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-annotations/2.12.4/jackson-annotations-2.12.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-databind/2.12.4/jackson-databind-2.12.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-core/2.12.4/jackson-core-2.12.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/commons-codec/commons-codec/1.15/commons-codec-1.15.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

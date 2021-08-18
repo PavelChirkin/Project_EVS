@@ -12,8 +12,8 @@ public class MainLog {
 
 
     public static void main(String[] args) throws IOException {
-        String dir1 = "C:"+ "\\"+"exams"+"\\"+"oop-basics";  //args[0];
-        String dir2 = "C:"+ "\\"+"exams"+"\\"+"oop-basics"+"\\"+ "oop_basics_answer";  //args[1];
+        String dir1 = args[0];  //"C:"+ "\\"+"exams"+"\\"+"oop-basics";
+        String dir2 = args[1];  //"C:"+ "\\"+"exams"+"\\"+"oop-basics"+"\\"+ "oop_basics_answer";
         MainLog main = new MainLog();
 
         main.menu(dir1, dir2);
